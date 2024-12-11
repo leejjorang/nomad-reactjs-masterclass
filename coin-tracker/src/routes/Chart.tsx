@@ -3,6 +3,8 @@ import { fetchCoinHistory } from "../api";
 import { useQuery } from "@tanstack/react-query";
 import ApexChart from "react-apexcharts";
 import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "../atom";
 
 const Loader = styled.span`
   display: block;
@@ -30,6 +32,8 @@ const Chart = ({ coinId }: ChartProps) => {
     refetchInterval: 10000,
   });
 
+  const isDark = useRecoilValue(isDarkAtom);
+
   const options: ApexCharts.ApexOptions = {
     chart: {
       type: "line",
@@ -39,6 +43,9 @@ const Chart = ({ coinId }: ChartProps) => {
     },
     stroke: {
       curve: "smooth",
+    },
+    theme: {
+      mode: isDark ? "dark" : "light",
     },
   };
 
